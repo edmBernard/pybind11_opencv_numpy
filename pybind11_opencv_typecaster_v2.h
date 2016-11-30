@@ -69,8 +69,6 @@ template <> struct type_caster<cv::Mat> {
          */
         static handle cast(const cv::Mat &m, return_value_policy, handle defval) 
         {
-            std::cout << "m.cols : " << m.cols << std::endl;
-            std::cout << "m.rows : " << m.rows << std::endl;
             std::string format = format_descriptor<unsigned char>::format();
             size_t elemsize = sizeof(unsigned char);
             int dim; 
