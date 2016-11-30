@@ -1,4 +1,4 @@
-import eb
+import build.eb as eb
 import copy
 
 a = eb.read_image("test.png")

@@ -28,7 +28,7 @@ PYBIND11_PLUGIN(eb)
 {
     py::module m("eb", "pybind11 eb plugin");
     m.def("read_image", &read_image, "A function that read an image", 
-        py::arg("image");
+        py::arg("image"));
 
     m.def("show_image", &show_image, "A function that show an image", 
         py::arg("image"));
