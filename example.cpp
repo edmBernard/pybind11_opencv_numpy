@@ -1,5 +1,4 @@
 #include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -7,8 +6,6 @@
 
 #include <string>
 #include <iostream>
-
-#include "pybind11_opencv_typecaster.hpp"
 
 #include "ndarray_converter.h"
 
