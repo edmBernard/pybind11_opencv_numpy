@@ -8,7 +8,9 @@
 #include <string>
 #include <iostream>
 
-#include "pybind11_opencv_typecaster_v2.h"
+#include "pybind11_opencv_typecaster.hpp"
+
+#include "ndarray_converter.h"
 
 namespace py = pybind11;
 
@@ -24,14 +26,29 @@ cv::Mat read_image(std::string image_name)
     return image;
 }
 
-PYBIND11_PLUGIN(eb) 
+cv::Mat passthru(cv::Mat image)
 {
-    py::module m("eb", "pybind11 eb plugin");
+    return image;
+}
+
+cv::Mat cloneimg(cv::Mat image)
+{
+    return image.clone();
+}
+
+PYBIND11_PLUGIN(_example) 
+{
+    NDArrayConverter::init_numpy();
+    
+    py::module m("example", "pybind11 opencv example plugin");
     m.def("read_image", &read_image, "A function that read an image", 
         py::arg("image"));
 
     m.def("show_image", &show_image, "A function that show an image", 
         py::arg("image"));
+        
+    m.def("passthru", &passthru, "Passthru function", py::arg("image"));
+    m.def("clone", &cloneimg, "Clone function", py::arg("image"));
 
     return m.ptr();
 }

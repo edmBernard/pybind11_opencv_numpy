@@ -1,11 +1,20 @@
-import build.eb as eb
+from __future__ import print_function
+
+import example as eb
 import copy
 
 a = eb.read_image("test.png")
+print('init a: 0x%x' % id(a))
 eb.show_image(a)  # work
 
-b=a[:,:,0]
-eb.show_image(b)  # don't work continous problem
+# Proves that it's still the same thing
+b = eb.passthru(a)
+print('same b: 0x%x' % id(b))
 
-c=copy.deepcopy(b)
-eb.show_image(c)  # work
+# Make a copy
+c = eb.clone(b)
+print('diff c: 0x%x' % id(c))
+
+d=copy.deepcopy(c)
+eb.show_image(d)  # still works
+print('diff d: 0x%x' % id(d))
