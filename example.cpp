@@ -33,7 +33,7 @@ cv::Mat cloneimg(cv::Mat image)
     return image.clone();
 }
 
-PYBIND11_PLUGIN(_example) 
+PYBIND11_PLUGIN(example) 
 {
     NDArrayConverter::init_numpy();
     
