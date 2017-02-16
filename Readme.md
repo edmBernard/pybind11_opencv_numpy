@@ -22,7 +22,7 @@ An example of pybind11 for cv::Mat <-> np.array
 
 ### Link pybind11 source in src folder
 ```
-ln -s ../pybind11/include/pybind11 src/pybind11
+ln -s path/to/pybind11/include/pybind11 src/pybind11
 ```
 
 ### Compile
