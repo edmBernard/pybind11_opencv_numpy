@@ -85,11 +85,11 @@ class BuildExt(build_ext):
 
 ext_modules = [
     Extension(
-        'example/_example',
+        'example/example',
         [
             'example.cpp',
             'ndarray_converter.cpp',
-        ], 
+        ],
         include_dirs=[
             # Path to pybind11 headers
             get_pybind_include(),
