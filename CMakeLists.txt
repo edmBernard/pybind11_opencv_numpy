@@ -21,7 +21,7 @@ MESSAGE( " *** PYTHON_LIBRARIES : " ${PYTHON_LIBRARIES} )
 include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS}) 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pybind11/include)
 
 #**************************************************************************************************
 # Set variable **************************************************************************************************
