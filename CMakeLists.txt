@@ -1,27 +1,29 @@
 project(Test_pybind11)
 
 #**************************************************************************************************
-# General cMake settings 
+# General cMake settings
 #**************************************************************************************************
 cmake_minimum_required(VERSION 3.5)
 
 #**************************************************************************************************
 # Find Package **************************************************************************************************
-find_package(OpenCV 3 REQUIRED) 
-MESSAGE( " *** OpenCV_INCLUDE_DIRS : " ${OpenCV_INCLUDE_DIRS} ) 
-MESSAGE( " *** OpenCV_LIB_DIRS : " ${OpenCV_LIB_DIRS} ) 
+find_package(OpenCV 3 REQUIRED)
+MESSAGE( " *** OpenCV_INCLUDE_DIRS : " ${OpenCV_INCLUDE_DIRS} )
+MESSAGE( " *** OpenCV_LIB_DIRS : " ${OpenCV_LIB_DIRS} )
 MESSAGE( " *** OpenCV_LIBS : " ${OpenCV_LIBS} )
 
 find_package(PythonLibs 3 REQUIRED)
-MESSAGE( " *** PYTHON_INCLUDE_DIRS : " ${PYTHON_INCLUDE_DIRS} ) 
-MESSAGE( " *** PYTHON_LIBRARIES : " ${PYTHON_LIBRARIES} ) 
+MESSAGE( " *** PYTHON_INCLUDE_DIRS : " ${PYTHON_INCLUDE_DIRS} )
+MESSAGE( " *** PYTHON_LIBRARIES : " ${PYTHON_LIBRARIES} )
+
+find_package(pybind11 CONFIG REQUIRED)
 
 #**************************************************************************************************
 # Include **************************************************************************************************
 include_directories(${PYTHON_INCLUDE_DIRS})
-include_directories(${OpenCV_INCLUDE_DIRS}) 
+include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pybind11/include)
+include_directories(${pybind11_INCLUDE_DIR})
 
 #**************************************************************************************************
 # Set variable **************************************************************************************************
@@ -41,7 +43,7 @@ LINK_DIRECTORIES(
 )
 
 #**************************************************************************************************
-# Make configuration 
+# Make configuration
 #**************************************************************************************************
 add_library(example SHARED ${SOURCES})
 target_link_libraries(example ${PYTHON_LIBRARIES} ${OpenCV_LIBS})
