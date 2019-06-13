@@ -19,7 +19,11 @@ void show_image(cv::Mat image)
 
 cv::Mat read_image(std::string image_name)
 {
+#if CV_MAJOR_VERSION < 4
     cv::Mat image = cv::imread(image_name, CV_LOAD_IMAGE_COLOR);
+#else
+    cv::Mat image = cv::imread(image_name, cv::IMREAD_COLOR);
+#endif
     return image;
 }
 
@@ -33,17 +37,17 @@ cv::Mat cloneimg(cv::Mat image)
     return image.clone();
 }
 
-PYBIND11_PLUGIN(example) 
+PYBIND11_PLUGIN(example)
 {
     NDArrayConverter::init_numpy();
-    
+
     py::module m("example", "pybind11 opencv example plugin");
-    m.def("read_image", &read_image, "A function that read an image", 
+    m.def("read_image", &read_image, "A function that read an image",
         py::arg("image"));
 
-    m.def("show_image", &show_image, "A function that show an image", 
+    m.def("show_image", &show_image, "A function that show an image",
         py::arg("image"));
-        
+
     m.def("passthru", &passthru, "Passthru function", py::arg("image"));
     m.def("clone", &cloneimg, "Clone function", py::arg("image"));
 
