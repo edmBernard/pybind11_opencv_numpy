@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.5)
 
 #**************************************************************************************************
 # Find Package **************************************************************************************************
-find_package(OpenCV 3 REQUIRED)
+find_package(OpenCV REQUIRED)
 MESSAGE( " *** OpenCV_INCLUDE_DIRS : " ${OpenCV_INCLUDE_DIRS} )
 MESSAGE( " *** OpenCV_LIB_DIRS : " ${OpenCV_LIB_DIRS} )
 MESSAGE( " *** OpenCV_LIBS : " ${OpenCV_LIBS} )
@@ -22,6 +22,7 @@ find_package(pybind11 CONFIG REQUIRED)
 # Include **************************************************************************************************
 include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(${OpenCV_INCLUDE_DIRS}/opencv4)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${pybind11_INCLUDE_DIR})
 
