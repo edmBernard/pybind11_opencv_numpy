@@ -17,6 +17,8 @@ An example of pybind11 for cv::Mat <-> np.array
 
 We use [vcpkg](https://github.com/Microsoft/vcpkg) to install [pybind11](https://github.com/pybind/pybind11) library
 
+*Note* : This method support opencv 2.4, opencv 3 and opencv 4.
+
 ```
 ./vcpkg install pybind11
 ```
@@ -40,6 +42,8 @@ python3 test.py
 ```
 
 ## Generation with setup.py
+
+*Note* : This method only support opencv 2.4 and opencv 3 at this time. Opencv 4 is not supported yet.
 
 ### install pybind11
 
