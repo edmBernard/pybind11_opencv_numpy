@@ -1,0 +1,11 @@
+---
+# We'll use defaults from the LLVM style.
+BasedOnStyle: LLVM
+UseTab: Never
+---
+Language: Cpp
+ColumnLimit: 0
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+---

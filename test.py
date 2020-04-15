@@ -32,3 +32,10 @@ print('\ninit e: 0x%x' % id(f))
 
 g = eb.passthru(f)
 print('same f: 0x%x' % id(g))
+
+
+# example of class
+my_class = eb.AddClass(1)
+h = my_class.add(f)
+print(f[0, 0])  # expected 0
+print(h[0, 0])  # expected 1
