@@ -37,11 +37,10 @@ cv::Mat cloneimg(cv::Mat image)
     return image.clone();
 }
 
-PYBIND11_PLUGIN(example)
-{
+PYBIND11_MODULE(example, m) {
+
     NDArrayConverter::init_numpy();
 
-    py::module m("example", "pybind11 opencv example plugin");
     m.def("read_image", &read_image, "A function that read an image",
         py::arg("image"));
 
@@ -51,6 +50,5 @@ PYBIND11_PLUGIN(example)
     m.def("passthru", &passthru, "Passthru function", py::arg("image"));
     m.def("clone", &cloneimg, "Clone function", py::arg("image"));
 
-    return m.ptr();
 }
 
