@@ -43,7 +43,6 @@ python3 test.py
 
 ## Generation with setup.py
 
-*Note* : This method only support opencv 2.4 and opencv 3 at this time. Opencv 4 is not supported yet.
 
 ### install pybind11
 
@@ -53,7 +52,18 @@ pip3 install pybind11
 
 ### Compile
 
+#### Opencv2.4+, Opencv3+
+
 ```
+python3 setup.py build
+```
+
+#### Opencv4
+
+In Opencv4, there a extra folder level for header (ex: `opencv4/opencv2/core/core.hpp`). To be able to compile with `setup.py` we need a extra command to indicate header location.
+
+```
+python3 setup.py build_ext --include-dirs "/usr/local/include/opencv4"
 python3 setup.py build
 ```
 
