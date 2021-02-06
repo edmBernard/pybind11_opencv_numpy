@@ -1,23 +1,28 @@
 # pybind11_opencv_numpy
 
-An example of pybind11 for cv::Mat <-> np.array
+Binding between cv::Mat and np.array. And a small code example of how it work. the code work for `OpenCV 2.4`, `OpenCV 3+` and `OpenCV 4+`
+
+The code in this repository create a simple binding, function in c++ are implemented in `example.cpp` file and the script that use them is `test.py`.
 
 ```bash
 /project folder
 ├── build
 ├── example
-│   ├── exemple.so  # generate with make
-│   └── example.cpython-36m-x86_64-linux-gnu.so  # generate with setup.py
+│   ├── exemple.so                               # generate with cmake
+│   └── example.cpython-36m-x86_64-linux-gnu.so  # generate with setup.py (the name will depends of the python version use)
 ├── CMakeLists.txt
 ├── setup.py
+├── ndarray_converter.cpp  # Effective implementation of the binding
+├── ndarray_converter.h    # Header for binding functions
 └── ...
 ```
 
-## Generation with make
+## Generation with cmake/make
+
+*Note* : This method support opencv 2.4, opencv 3 and opencv 4.
 
 We use [vcpkg](https://github.com/Microsoft/vcpkg) to install [pybind11](https://github.com/pybind/pybind11) library
 
-*Note* : This method support opencv 2.4, opencv 3 and opencv 4.
 
 ```
 ./vcpkg install pybind11
@@ -36,11 +41,6 @@ make
 make install
 ```
 
-### Run
-```bash
-python3 test.py
-```
-
 ## Generation with setup.py
 
 
@@ -52,15 +52,15 @@ pip3 install pybind11
 
 ### Compile
 
-#### Opencv2.4+, Opencv3+
+#### OpenCV 2.4+, OpenCV 3+
 
 ```
 python3 setup.py build
 ```
 
-#### Opencv4
+#### OpenCV 4
 
-In Opencv4, there a extra folder level for header (ex: `opencv4/opencv2/core/core.hpp`). To be able to compile with `setup.py` we need a extra command to indicate header location.
+In OpenCV 4, there a extra folder level for headers (ex: `opencv4/opencv2/core/core.hpp`). To be able to compile with `setup.py` we need a extra command to indicate header location.
 
 ```
 python3 setup.py build_ext --include-dirs "/usr/local/include/opencv4"
@@ -77,10 +77,4 @@ or
 
 ```
 mv build/lib.linux-x86_64-3.5/example/example.cpython-36m-x86_64-linux-gnu.so example/example.cpython-36m-x86_64-linux-gnu.so
-```
-
-### Run
-
-```
-python3 test.py
 ```
