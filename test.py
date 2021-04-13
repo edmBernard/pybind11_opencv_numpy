@@ -2,18 +2,21 @@ import numpy as np
 import example.example as eb
 import copy
 
+arr = np.ones((53),dtype=float)
+assert(arr.shape==eb.clone(arr).shape)
+
 # Read from c++
 a = eb.read_image("test.png")
 print('init a: 0x%x' % id(a))
-eb.show_image(a)  # work
+#eb.show_image(a)  # work
 
 # Check continuous problem from old version
 b = a[:, :, 0]
-eb.show_image(b)  # work no more continous problem
+#eb.show_image(b)  # work no more continous problem
 print('diff b: 0x%x' % id(b))
 
 c = copy.deepcopy(b)
-eb.show_image(c)  # still works
+#eb.show_image(c)  # still works
 print('diff c: 0x%x' % id(c))
 
 
