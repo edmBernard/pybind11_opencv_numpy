@@ -2,7 +2,7 @@
 
 Binding between cv::Mat and np.array. And a small code example of how it work. the code work for `OpenCV 2.4`, `OpenCV 3+` and `OpenCV 4+`
 
-The code in this repository create a simple binding, function in c++ are implemented in `example.cpp` file and the script that use them is `test.py`.
+The code in this repository create a simple binding, function in c++ are implemented in `example.cpp` file and the script that use them is `example.py`.
 
 ```bash
 /project folder
@@ -35,10 +35,11 @@ mkdir build
 cd build
 # configure make with vcpkg toolchain
 cmake .. -DCMAKE_TOOLCHAIN_FILE=${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake
+# on Windows : cmake.exe .. -DCMAKE_TOOLCHAIN_FILE="$Env:VCPKG_DIR/scripts/buildsystems/vcpkg.cmake"
 # generate the example.so library
-make
+cmake --build . --config Release
 # move example.so library in example folder
-make install
+cmake --install . --config Release
 ```
 
 ## Generation with setup.py
@@ -47,7 +48,7 @@ make install
 ### install pybind11
 
 ```
-pip3 install pybind11
+python3 -m pip3 install pybind11
 ```
 
 ### Compile

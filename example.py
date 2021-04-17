@@ -3,7 +3,7 @@ import example.example as eb
 import copy
 
 # Read from c++
-a = eb.read_image("test.png")
+a = eb.read_image("tests/images/test.png")
 print('init a: 0x%x' % id(a))
 eb.show_image(a)  # work
 
