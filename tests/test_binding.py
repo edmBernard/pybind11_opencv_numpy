@@ -2,6 +2,28 @@ import numpy as np
 import test_module.test as test
 import copy
 
+def test_from_python_to_cpp():
+  mat = np.zeros(100)
+  mat[:50,:] = 255
+  python_result = mat.sum()
+  cpp_result = test.sum(mat)
+  assert(python_result == cpp_result)
+
+def test_from_cpp_to_python():
+  pass
+
+def test_passthough():
+  pass
+
+def test_pointer():
+  pass
+
+def test_slicing():
+  pass
+
+def test_class_member():
+  pass
+
 # Read from c++
 a = test.read_image("test.png")
 print('init a: 0x%x' % id(a))

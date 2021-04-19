@@ -1,6 +1,6 @@
 # pybind11_opencv_numpy
 
-Binding between cv::Mat and np.array. And a small code example of how it work. the code work for `OpenCV 2.4`, `OpenCV 3+` and `OpenCV 4+`
+Binding between cv::Mat and np.array. And a small code example of how it work. The code work for `OpenCV 2.4`, `OpenCV 3+` and `OpenCV 4+`
 
 The code in this repository create a simple binding, function in c++ are implemented in `example.cpp` file and the script that use them is `example.py`.
 
