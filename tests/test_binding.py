@@ -1,5 +1,5 @@
 import numpy as np
-import test_module.test as test
+from . import module.test_module as test
 import copy
 
 def test_from_python_to_cpp():
@@ -8,6 +8,7 @@ def test_from_python_to_cpp():
   python_result = mat.sum()
   cpp_result = test.sum(mat)
   assert(python_result == cpp_result)
+
 
 def test_from_cpp_to_python():
   pass
@@ -23,6 +24,27 @@ def test_slicing():
 
 def test_class_member():
   pass
+
+
+def test_return_by_ref():
+  pass
+
+def test_return_by_value():
+  pass
+
+def test_return_by_pointer():
+  pass
+
+def test_return_by_argument_by_ref():
+  pass
+
+def test_return_by_argument_by_value():
+  pass
+
+def test_return_by_argument_by_pointer():
+  pass
+
+
 
 # Read from c++
 a = test.read_image("test.png")

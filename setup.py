@@ -3,12 +3,8 @@
 # Much of this copied from https://github.com/pybind/python_example.git
 #
 
-import fnmatch
-import os
-from os.path import dirname, exists, join
 from setuptools import find_packages, setup, Extension
 from setuptools.command.build_ext import build_ext
-import subprocess
 import sys
 import setuptools
 
@@ -85,9 +81,9 @@ class BuildExt(build_ext):
 
 ext_modules = [
     Extension(
-        'example/example',
+        'tests/test_modules/test_modules',
         [
-            'example.cpp',
+            'tests/cpp/test.cpp',
             'ndarray_converter.cpp',
         ],
         include_dirs=[
@@ -101,7 +97,7 @@ ext_modules = [
 ]
 
 setup(
-    name='pybind11-opencv-numpy-example',
+    name='pybind11-opencv-numpy-test-modules',
     version='0.1',
     author='Dustin Spicuzza',
     author_email='dustin@virtualroadside.com',

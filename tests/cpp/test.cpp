@@ -35,19 +35,28 @@ cv::Mat cloneimg(cv::Mat image) {
   return image.clone();
 }
 
-class AddClass {
-public:
-  AddClass(int value) : value(value) {}
 
-  cv::Mat add(cv::Mat input) {
-    return input + this->value;
+class ClassForReturn {
+public:
+  ClassForReturn() {
+    m_image = cv::Mat(2, 2, CV_8UC3, cv::Scalar(1,2,3));
   }
 
+  cv::Mat& returnByRef() { return m_image; };
+
+  cv::Mat* returnByPointer() { return &m_image; };
+
+  cv::Mat returnByValue() { return m_image; };
+
+  void returnInArgumentByRef(cv::Mat& image) {};
+
+  void returnInArgumentByPointer(cv::Mat* image) {};
+
 private:
-  int value;
+  cv::Mat m_image;
 };
 
-PYBIND11_MODULE(example, m) {
+PYBIND11_MODULE(test_module, m) {
 
   NDArrayConverter::init_numpy();
 
@@ -60,7 +69,13 @@ PYBIND11_MODULE(example, m) {
   m.def("passthru", &passthru, "Passthru function", py::arg("image"));
   m.def("clone", &cloneimg, "Clone function", py::arg("image"));
 
-  py::class_<AddClass>(m, "AddClass")
-    .def(py::init<int>())
-    .def("add", &AddClass::add);
+
+  py::class_<ClassForReturn>(m, "ClassForReturn")
+    .def(py::init<>())
+    .def("returnByRef", &ClassForReturn::returnByRef)
+    .def("returnByPointer", &ClassForReturn::returnByPointer)
+    .def("returnByValue", &ClassForReturn::returnByValue)
+    .def("returnInArgumentByRef", &ClassForReturn::returnInArgumentByRef)
+    .def("returnInArgumentByPointer", &ClassForReturn::returnInArgumentByPointer)
+    ;
 }

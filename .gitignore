@@ -8,3 +8,5 @@ __pycache__
 /build
 /build*
 /tmp
+
+.pytest_cache

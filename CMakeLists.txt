@@ -43,7 +43,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 #**************************************************************************************************
 # Set variable **************************************************************************************************
 SET(SOURCES
-  ${CMAKE_CURRENT_SOURCE_DIR}/example.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/ndarray_converter.cpp
 )
 
@@ -60,8 +59,8 @@ LINK_DIRECTORIES(
 #**************************************************************************************************
 # Make configuration
 #**************************************************************************************************
-add_library(example SHARED ${SOURCES})
-target_link_libraries(example ${PYTHON_LIBRARIES} ${OpenCV_LIBS})
-SET_TARGET_PROPERTIES(example PROPERTIES PREFIX "")
+add_library(test_modules SHARED ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp/test.cpp)
+target_link_libraries(test_modules ${PYTHON_LIBRARIES} ${OpenCV_LIBS})
+SET_TARGET_PROPERTIES(test_modules PROPERTIES PREFIX "")
 
-install(TARGETS example DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/example)
+install(TARGETS test_modules DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_modules)
