@@ -42,6 +42,17 @@ cmake --build . --config Release
 cmake --install . --config Release
 ```
 
+#### Numpy header
+
+In case of error like: `'numpy/ndarrayobject.h' : No such file or directory`
+
+You have to be sure numpy is install on the computer either with `python -m pip install numpy` or `sudo apt-get install python-numpy` for linux.
+Even if numpy is installed, CMake was not able to find correctly numpy header during configuration. Probably because numpy is install on the user package. Its possible the explicitly set the directory with the following command :
+
+```bash
+cmake .. -DCMAKE_TOOLCHAIN_FILE=${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake -DNUMPY_INCLUDE_DIR="${PYTHON_USER_DIR}/LocalCache/local-packages/Python39/site-packages/numpy/core/include/"
+```
+
 ## Generation with setup.py
 
 
