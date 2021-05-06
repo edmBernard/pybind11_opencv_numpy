@@ -1,17 +1,17 @@
 import numpy as np
-from .test_module import test_module as test
+from tests import test_module as tm
 
 
 def test_return_by_ref():
-  a = test.ClassForReturn()
+  a = tm.ClassForReturn()
   assert(id(a.returnByRef()) == id(a.returnByRef()))
 
 def test_return_by_value():
-  a = test.ClassForReturn()
+  a = tm.ClassForReturn()
   assert(id(a.returnByValue()) != id(a.returnByValue()))
 
 def test_return_by_pointer():
-  a = test.ClassForReturn()
+  a = tm.ClassForReturn()
   assert(id(a.returnByPointer()) == id(a.returnByPointer()))
 
 def test_return_by_argument_by_ref():

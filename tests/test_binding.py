@@ -1,12 +1,12 @@
 import numpy as np
-from .test_module import test_module as test
+from tests import test_module as tm
 import copy
 
 def test_from_python_to_cpp():
   mat = np.zeros((100, 100))
   mat[:50,:] = 255
   python_result = mat.sum()
-  cpp_result = test.sum(mat)
+  cpp_result = tm.sum(mat)
   assert(python_result == cpp_result)
 
 

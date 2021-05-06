@@ -59,8 +59,5 @@ LINK_DIRECTORIES(
 #**************************************************************************************************
 # Make configuration
 #**************************************************************************************************
-add_library(test_module SHARED ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp/test.cpp)
-target_link_libraries(test_module ${PYTHON_LIBRARIES} ${OpenCV_LIBS})
-SET_TARGET_PROPERTIES(test_module PROPERTIES PREFIX "")
-
-install(TARGETS test_module DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_module)
+pybind11_add_module(test_module MODULE ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp/test.cpp)
+target_link_libraries(test_module PRIVATE ${OpenCV_LIBS})
