@@ -1,9 +1,9 @@
 import numpy as np
-from . import module.test_module as test
+from .test_module import test_module as test
 import copy
 
 def test_from_python_to_cpp():
-  mat = np.zeros(100)
+  mat = np.zeros((100, 100))
   mat[:50,:] = 255
   python_result = mat.sum()
   cpp_result = test.sum(mat)
@@ -46,40 +46,40 @@ def test_return_by_argument_by_pointer():
 
 
 
-# Read from c++
-a = test.read_image("test.png")
-print('init a: 0x%x' % id(a))
-test.show_image(a)  # work
+# # Read from c++
+# a = test.read_image("test.png")
+# print('init a: 0x%x' % id(a))
+# test.show_image(a)  # work
 
-# Check continuous problem from old version
-b = a[:, :, 0]
-test.show_image(b)  # work no more continous problem
-print('diff b: 0x%x' % id(b))
+# # Check continuous problem from old version
+# b = a[:, :, 0]
+# test.show_image(b)  # work no more continous problem
+# print('diff b: 0x%x' % id(b))
 
-c = copy.deepcopy(b)
-test.show_image(c)  # still works
-print('diff c: 0x%x' % id(c))
-
-
-# Proves that it's still the same thing
-d = test.passthru(a)
-print('same d: 0x%x' % id(b))
-
-# Make a copy
-e = test.clone(d)
-print('diff e: 0x%x' % id(e))
+# c = copy.deepcopy(b)
+# test.show_image(c)  # still works
+# print('diff c: 0x%x' % id(c))
 
 
-# different allocator
-f = np.zeros(shape=(100, 100), dtype=np.uint8)
-print('\ninit e: 0x%x' % id(f))
+# # Proves that it's still the same thing
+# d = test.passthru(a)
+# print('same d: 0x%x' % id(d))
 
-g = test.passthru(f)
-print('same f: 0x%x' % id(g))
+# # Make a copy
+# e = test.clone(d)
+# print('diff e: 0x%x' % id(e))
 
 
-# example of class
-my_class = test.AddClass(1)
-h = my_class.add(f)
-print(f[0, 0])  # expected 0
-print(h[0, 0])  # expected 1
+# # different allocator
+# f = np.zeros(shape=(100, 100), dtype=np.uint8)
+# print('\ninit e: 0x%x' % id(f))
+
+# g = test.passthru(f)
+# print('same f: 0x%x' % id(g))
+
+
+# # example of class
+# my_class = test.AddClass(1)
+# h = my_class.add(f)
+# print(f[0, 0])  # expected 0
+# print(h[0, 0])  # expected 1

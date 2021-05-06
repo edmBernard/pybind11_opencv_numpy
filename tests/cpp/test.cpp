@@ -72,7 +72,7 @@ PYBIND11_MODULE(test_module, m) {
 
   py::class_<ClassForReturn>(m, "ClassForReturn")
     .def(py::init<>())
-    .def("returnByRef", &ClassForReturn::returnByRef)
+    .def("returnByRef", &ClassForReturn::returnByRef, py::return_value_policy::reference_internal)
     .def("returnByPointer", &ClassForReturn::returnByPointer)
     .def("returnByValue", &ClassForReturn::returnByValue)
     .def("returnInArgumentByRef", &ClassForReturn::returnInArgumentByRef)

@@ -59,8 +59,8 @@ LINK_DIRECTORIES(
 #**************************************************************************************************
 # Make configuration
 #**************************************************************************************************
-add_library(test_modules SHARED ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp/test.cpp)
-target_link_libraries(test_modules ${PYTHON_LIBRARIES} ${OpenCV_LIBS})
-SET_TARGET_PROPERTIES(test_modules PROPERTIES PREFIX "")
+add_library(test_module SHARED ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp/test.cpp)
+target_link_libraries(test_module ${PYTHON_LIBRARIES} ${OpenCV_LIBS})
+SET_TARGET_PROPERTIES(test_module PROPERTIES PREFIX "")
 
-install(TARGETS test_modules DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_modules)
+install(TARGETS test_module DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_module)
