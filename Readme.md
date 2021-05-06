@@ -17,15 +17,19 @@ The code in this repository create a simple binding, function in c++ are impleme
 └── ...
 ```
 
-## Generation with cmake/make
+There is 3 way to build the project, more information can be found on pybin11 website [here](https://pybind11.readthedocs.io/en/stable/compiling.html#build-systems) :
+  1. build with cmake : the basic compilation library will be generated in build folder
+  2. build with setup.py and cmake : install your module in python and dependency are managed by cmake/vcpkg (opencv and pybind11)
+  3. build with setup.py and setuptools : install your module in python and dependency are managed by python package (opencv and pybind11) ***In coming**
+
+## Build with cmake
 
 *Note* : This method support opencv 2.4, opencv 3 and opencv 4.
 
 We use [vcpkg](https://github.com/Microsoft/vcpkg) to install [pybind11](https://github.com/pybind/pybind11) library
 
-
 ```
-./vcpkg install pybind11
+./vcpkg install pybind11 opencv4
 ```
 
 ### Compile
@@ -38,8 +42,6 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake
 # on Windows : cmake.exe .. -DCMAKE_TOOLCHAIN_FILE="$Env:VCPKG_DIR/scripts/buildsystems/vcpkg.cmake"
 # generate the example.so library
 cmake --build . --config Release
-# move example.so library in example folder
-cmake --install . --config Release
 ```
 
 #### Numpy header
@@ -53,7 +55,16 @@ Even if numpy is installed, CMake was not able to find correctly numpy header du
 cmake .. -DCMAKE_TOOLCHAIN_FILE=${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake -DNUMPY_INCLUDE_DIR="${PYTHON_USER_DIR}/LocalCache/local-packages/Python39/site-packages/numpy/core/include/"
 ```
 
-## Generation with setup.py
+
+## Build with setup.py and cmake
+
+*Note* : This method support opencv 2.4, opencv 3 and opencv 4.
+
+We use [vcpkg](https://github.com/Microsoft/vcpkg) to install [pybind11](https://github.com/pybind/pybind11) library
+
+```
+./vcpkg install pybind11 opencv4
+```
 
 
 ### install pybind11
@@ -90,3 +101,19 @@ or
 ```
 mv build/lib.linux-x86_64-3.5/example/example.cpython-36m-x86_64-linux-gnu.so example/example.cpython-36m-x86_64-linux-gnu.so
 ```
+
+
+
+
+## Build with setup.py and setuptool
+
+
+*Note* : This method support opencv 2.4, opencv 3 and opencv 4.
+
+In this case we use pip to manage dependencies : [pybind11](https://github.com/pybind/pybind11) and opencv
+
+```
+pip install pybind11 python-opencv
+```
+
+  *** in coming ***
