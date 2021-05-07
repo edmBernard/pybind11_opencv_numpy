@@ -112,8 +112,17 @@ mv build/lib.linux-x86_64-3.5/example/example.cpython-36m-x86_64-linux-gnu.so ex
 
 In this case we use pip to manage dependencies : [pybind11](https://github.com/pybind/pybind11) and opencv
 
-```
+```bash
 pip install pybind11 python-opencv
 ```
 
   *** in coming ***
+
+
+## Execute Tests
+
+Tests use the binding module generate by cmake.
+
+```bash
+python -m pytest
+```
