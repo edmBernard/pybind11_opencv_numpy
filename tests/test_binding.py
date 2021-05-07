@@ -3,18 +3,20 @@ from tests import test_module as tm
 import copy
 
 def test_from_python_to_cpp():
-  mat = np.zeros((100, 100))
-  mat[:50,:] = 255
-  python_result = mat.sum()
-  cpp_result = tm.sum(mat)
-  assert(python_result == cpp_result)
+  mat =  tm.generate_matrix()
+  assert(mat.shape == (10, 10, 3))
+  assert(tm.check_matrix_content(mat))
 
 
 def test_from_cpp_to_python():
-  pass
+  mat =  tm.generate_matrix()
+  assert(mat.shape == (10, 10, 3))
+
 
 def test_passthough():
-  pass
+  mat =  tm.generate_matrix()
+  assert(mat.shape == (10, 10, 3))
+  assert(tm.check_matrix_content(mat))
 
 def test_pointer():
   pass
