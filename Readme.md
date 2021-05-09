@@ -16,7 +16,7 @@ The code in this repository create a simple binding, function in c++ are impleme
 There is 3 way to build the project, more information can be found on pybin11 website [here](https://pybind11.readthedocs.io/en/stable/compiling.html#build-systems) :
   1. build with cmake : the basic, compiled library will be generated in build folder
   2. build with setup.py and cmake : install your module in python and dependency are managed by cmake/vcpkg (opencv and pybind11)
-  3. build with setup.py and setuptools : install your module in python and dependency are managed by python package (opencv and pybind11) ***In coming**
+  3. build with setup.py and setuptools : install your module in python and dependency are managed by python package (opencv and pybind11) *** Soon ***
 
 ## Build with cmake
 
