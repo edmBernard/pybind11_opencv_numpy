@@ -111,8 +111,8 @@ std::vector<uint16_t> getContentAsVector(const cv::Mat &mat) {
   for (uint16_t i = 0; i < height; ++i) {
     for (uint16_t j = 0; j < width; ++j) {
       for (uint16_t c = 0; c < channel; ++c) {
-        const cv::Vec3w values = mat.at<cv::Vec3w>(cv::Point(i,j));
-        buffer.push_back(values(channel));
+        const cv::Vec3w values = mat.at<cv::Vec3w>(cv::Point(j,i));
+        buffer.push_back(values(c));
       }
     }
   }
@@ -162,6 +162,9 @@ PYBIND11_MODULE(test_module, m) {
         py::arg("image"));
 
   m.def("get_shape", &getShape, "A function that return the shape of the matrice",
+        py::arg("image"));
+
+  m.def("get_content_as_list", &getContentAsVector, "A function that return the content as a list",
         py::arg("image"));
 
 
