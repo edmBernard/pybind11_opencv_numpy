@@ -1,5 +1,5 @@
 try:
-  # windows 
+  # windows
   from build.Release import test_module
 except:
   # linux
