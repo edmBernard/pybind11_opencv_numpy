@@ -44,7 +44,7 @@ $Env:VCPKG_DIR="/path/to/vcpkg/dir"
 
 *Note* : vcpkg dir should contain the following folder : `scripts/buildsystems/vcpkg.cmake`
 
-### Step 3: Compile
+### Step 3 : Compile
 
 ```bash
 mkdir build
@@ -74,7 +74,7 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake -D
 
 You should first follow step 1 and 2 from the ***Build with cmake*** paragraph
 
-### Compile
+### Step 3 : Compile
 
 #### OpenCV 2.4+, OpenCV 3+, , OpenCV 4+
 
