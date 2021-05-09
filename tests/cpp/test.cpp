@@ -13,11 +13,6 @@
 
 namespace py = pybind11;
 
-void show_image(cv::Mat image) {
-  cv::imshow("image_from_Cpp", image);
-  cv::waitKey(0);
-}
-
 cv::Mat read_image(std::string image_name) {
 #if CV_MAJOR_VERSION < 4
   cv::Mat image = cv::imread(image_name, CV_LOAD_IMAGE_COLOR);
@@ -25,6 +20,11 @@ cv::Mat read_image(std::string image_name) {
   cv::Mat image = cv::imread(image_name, cv::IMREAD_COLOR);
 #endif
   return image;
+}
+
+void show_image(cv::Mat image) {
+  cv::imshow("image_from_Cpp", image);
+  cv::waitKey(0);
 }
 
 constexpr int width = 10;
@@ -67,7 +67,34 @@ bool checkMatrixContent(const cv::Mat& mat) {
   return match;
 }
 
+// Return the depth of the matrice element
+// cf. https://docs.opencv.org/master/d3/d63/classcv_1_1Mat.html#a8da9f853b6f3a29d738572fd1ffc44c0
+std::string checkDepth(const cv::Mat& mat) {
+  int depth = mat.depth();
+  switch (depth) {
+    case CV_8U:
+      return "CV_8U";
+    case CV_8S:
+      return "CV_8S";
+    case CV_16U:
+      return "CV_16U";
+    case CV_16S:
+      return "CV_16S";
+    case CV_32S:
+      return "CV_32S";
+    case CV_32F:
+      return "CV_32F";
+    case CV_64F:
+      return "CV_64F";
+    default:
+      throw std::runtime_error("Unknown element type");
+  }
+}
 
+std::tuple<int, int, int> getShape(const cv::Mat& mat) {
+  cv::Size s = mat.size();
+  return {s.width, s.height, mat.channels()};
+}
 
 cv::Mat passthru(cv::Mat image) {
   return image;
@@ -102,20 +129,28 @@ PYBIND11_MODULE(test_module, m) {
 
   NDArrayConverter::init_numpy();
 
-  m.def("read_image", &read_image, "A function that read an image",
-        py::arg("image"));
-
-  m.def("show_image", &show_image, "A function that show an image",
-        py::arg("image"));
-
-
   m.def("generate_matrix", &generateMatrix, "A function that generate a image");
 
   m.def("check_matrix_content", &checkMatrixContent, "A function that check the content a an image",
         py::arg("image"));
 
+  m.def("check_depth", &checkDepth, "A function that return the type of the matrice element",
+        py::arg("image"));
+
+  m.def("get_shape", &getShape, "A function that return the shape of the matrice",
+        py::arg("image"));
+
+
   m.def("passthru", &passthru, "Passthru function", py::arg("image"));
   m.def("clone", &cloneimg, "Clone function", py::arg("image"));
+
+
+  m.def("read_image", &read_image, "A function that read an image",
+        py::arg("image"));
+
+
+  m.def("show_image", &show_image, "A function that show an image",
+        py::arg("image"));
 
 
   py::class_<ClassForReturn>(m, "ClassForReturn")
