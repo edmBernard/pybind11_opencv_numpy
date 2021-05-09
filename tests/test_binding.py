@@ -1,21 +1,9 @@
 import numpy as np
 from tests import test_module as tm
-import copy
-
-def generate_matrix():
-  return np.arange(10*10*3, dtype=np.uint16).reshape((10, 10, 3))
+from tests.utils import generate_matrix, check_matrix_content
 
 
-def check_matrix_content(mat):
-  return np.any(generate_matrix() == mat)
-
-
-def test_python_utils():
-  mat = generate_matrix()
-  assert(check_matrix_content(mat))
-
-
-def test_from_python_to_cpp():
+def test_pass_py2cpp():
   mat = generate_matrix()
   assert(mat.shape == (10, 10, 3))
   assert(mat.flags['C_CONTIGUOUS'])
@@ -23,7 +11,7 @@ def test_from_python_to_cpp():
   assert(tm.check_matrix_content(mat))
 
 
-def test_from_cpp_to_python():
+def test_pass_cpp2py():
   mat =  tm.generate_matrix()
   assert(mat.shape == (10, 10, 3))
   assert(mat.flags['C_CONTIGUOUS'])
@@ -31,11 +19,28 @@ def test_from_cpp_to_python():
   assert(check_matrix_content(mat))
 
 
-def test_passthough():
+def test_passthough_cpp2cpp():
   mat =  tm.generate_matrix()
   assert(mat.shape == (10, 10, 3))
+  assert(mat.flags['C_CONTIGUOUS'])
   assert(check_matrix_content(mat))
   assert(tm.check_matrix_content(mat))
+
+
+def test_passthough_py2py():
+  mat =  generate_matrix()
+  returned_mat = tm.passthru(mat)
+  assert(mat.flags['C_CONTIGUOUS'])
+  assert(mat.shape == (10, 10, 3))
+  assert(check_matrix_content(mat))
+
+
+
+
+def test_slice():
+  pass
+
+
 
 def test_pointer():
   pass
