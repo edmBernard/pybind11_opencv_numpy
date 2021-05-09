@@ -2,20 +2,39 @@ import numpy as np
 from tests import test_module as tm
 import copy
 
+def generate_matrix():
+  return np.arange(10*10*3, dtype=np.uint16).reshape((10, 10, 3))
+
+
+def check_matrix_content(mat):
+  return np.any(generate_matrix() == mat)
+
+
+def test_python_utils():
+  mat = generate_matrix()
+  assert(check_matrix_content(mat))
+
+
 def test_from_python_to_cpp():
-  mat =  tm.generate_matrix()
+  mat = generate_matrix()
   assert(mat.shape == (10, 10, 3))
+  assert(mat.flags['C_CONTIGUOUS'])
+  assert(mat.dtype == np.uint16)
   assert(tm.check_matrix_content(mat))
 
 
 def test_from_cpp_to_python():
   mat =  tm.generate_matrix()
   assert(mat.shape == (10, 10, 3))
+  assert(mat.flags['C_CONTIGUOUS'])
+  assert(mat.dtype == np.uint16)
+  assert(check_matrix_content(mat))
 
 
 def test_passthough():
   mat =  tm.generate_matrix()
   assert(mat.shape == (10, 10, 3))
+  assert(check_matrix_content(mat))
   assert(tm.check_matrix_content(mat))
 
 def test_pointer():

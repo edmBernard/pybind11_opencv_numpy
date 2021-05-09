@@ -33,11 +33,11 @@ constexpr int channel = 3;
 
 
 // Generate buffer for a matrix 10x10x3
-std::vector<uint8_t> generateBuffer() {
-  std::vector<uint8_t> matrice;
-  const int size = width * height * channel;
+std::vector<uint16_t> generateBuffer() {
+  std::vector<uint16_t> matrice;
+  const uint16_t size = width * height * channel;
   matrice.reserve(size);
-  for (int i = 0; i < size; ++i) {
+  for (uint16_t i = 0; i < size; ++i) {
     matrice.push_back(i);
   }
   return matrice;
@@ -47,19 +47,18 @@ std::vector<uint8_t> generateBuffer() {
 // Generate matrix 10x10x3
 // Example of function that return a matrix by value
 cv::Mat generateMatrix() {
-  const std::vector<uint8_t> buffer = generateBuffer();
+  const std::vector<uint16_t> buffer = generateBuffer();
   return cv::Mat(buffer, true).reshape(3, {10, 10});
 }
-
 
 // Example of function that take a matrix as argument
 bool checkMatrixContent(const cv::Mat& mat) {
   // I don't compare buffer from the matrix with expected buffer to correctly manage slicing.
-  const std::vector<uint8_t> expectedBuffer = generateBuffer();
+  const std::vector<uint16_t> expectedBuffer = generateBuffer();
   bool match = true;
   for (int j = 0; j < height; ++j) {
     for (int i = 0; i < width; ++i) {
-      const cv::Vec3b values = mat.at<cv::Vec3b>(cv::Point(i,j));
+      const cv::Vec3w values = mat.at<cv::Vec3w>(cv::Point(i,j));
       match &= values(0) == expectedBuffer[j * width * 3 + i * 3 + 0];
       match &= values(1) == expectedBuffer[j * width * 3 + i * 3 + 1];
       match &= values(2) == expectedBuffer[j * width * 3 + i * 3 + 2];
