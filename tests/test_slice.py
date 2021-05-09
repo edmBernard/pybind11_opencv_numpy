@@ -17,7 +17,7 @@ def test_slicing_width():
   assert(not mat.flags['C_CONTIGUOUS'])
   assert(mat.dtype == np.uint16)
   assert(tm.get_shape(mat) == (10, 3, 3))
-  assert(np.any(tm.get_content_as_list(mat) == mat.flatten()))
+  assert(np.all(tm.get_content_as_list(mat) == mat.flatten()))
 
 
 def test_slicing_channel():
@@ -26,4 +26,4 @@ def test_slicing_channel():
   assert(not mat.flags['C_CONTIGUOUS'])
   assert(mat.dtype == np.uint16)
   assert(tm.get_shape(mat) == (10, 12, 1))
-  assert(np.any(tm.get_content_as_list(mat) == mat.flatten()))
+  assert(np.all(tm.get_content_as_list(mat) == mat.flatten()))

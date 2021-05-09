@@ -6,4 +6,4 @@ def generate_matrix():
 
 
 def check_matrix_content(mat):
-  return np.any(generate_matrix() == mat)
+  return np.all(generate_matrix() == mat)

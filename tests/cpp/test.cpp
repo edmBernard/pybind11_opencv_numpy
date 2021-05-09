@@ -111,8 +111,21 @@ std::vector<uint16_t> getContentAsVector(const cv::Mat &mat) {
   for (uint16_t i = 0; i < height; ++i) {
     for (uint16_t j = 0; j < width; ++j) {
       for (uint16_t c = 0; c < channel; ++c) {
-        const cv::Vec3w values = mat.at<cv::Vec3w>(cv::Point(j,i));
-        buffer.push_back(values(c));
+        uint16_t value;
+        switch(channel) {
+          case 1:
+            value = mat.at<uint16_t>(cv::Point(j,i));
+            break;
+          case 2:
+            value = mat.at<cv::Vec2w>(cv::Point(j,i))(c);
+            break;
+          case 3:
+            value = mat.at<cv::Vec3w>(cv::Point(j,i))(c);
+            break;
+          default:
+            throw std::runtime_error("This helper function only work with Channel = 1, 2, or 3");
+        }
+        buffer.push_back(value);
       }
     }
   }
@@ -144,6 +157,10 @@ public:
   void returnInArgumentByRef(cv::Mat& image) {};
 
   void returnInArgumentByPointer(cv::Mat* image) {};
+
+  void changeInternal() {
+    m_image.at<cv::Vec3b>(0, 0) = cv::Vec3b(4,5,6);
+  }
 
 private:
   cv::Mat m_image;
@@ -182,7 +199,8 @@ PYBIND11_MODULE(test_module, m) {
 
   py::class_<ClassForReturn>(m, "ClassForReturn")
     .def(py::init<>())
-    .def("returnByRef", &ClassForReturn::returnByRef, py::return_value_policy::reference_internal)
+    .def("changeInternal", &ClassForReturn::changeInternal)
+    .def("returnByRef", &ClassForReturn::returnByRef)
     .def("returnByPointer", &ClassForReturn::returnByPointer)
     .def("returnByValue", &ClassForReturn::returnByValue)
     .def("returnInArgumentByRef", &ClassForReturn::returnInArgumentByRef)
