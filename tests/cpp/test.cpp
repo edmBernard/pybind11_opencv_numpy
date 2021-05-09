@@ -149,6 +149,7 @@ public:
   }
 
   cv::Mat& returnByRef() { return m_image; };
+  const cv::Mat& viewMatrix() { return m_image; };
 
   cv::Mat* returnByPointer() { return &m_image; };
 
@@ -200,9 +201,11 @@ PYBIND11_MODULE(test_module, m) {
   py::class_<ClassForReturn>(m, "ClassForReturn")
     .def(py::init<>())
     .def("changeInternal", &ClassForReturn::changeInternal)
-    .def("returnByRef", &ClassForReturn::returnByRef)
-    .def("returnByPointer", &ClassForReturn::returnByPointer)
     .def("returnByValue", &ClassForReturn::returnByValue)
+    .def("returnByRefButCopy", &ClassForReturn::returnByRef)
+    .def("returnByRef", &ClassForReturn::returnByRef, py::return_value_policy::reference_internal)
+    .def("viewMatrix", &ClassForReturn::returnByRef, py::return_value_policy::reference_internal)
+    .def("returnByPointer", &ClassForReturn::returnByPointer, py::return_value_policy::reference_internal)
     .def("returnInArgumentByRef", &ClassForReturn::returnInArgumentByRef)
     .def("returnInArgumentByPointer", &ClassForReturn::returnInArgumentByPointer)
     ;
