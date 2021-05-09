@@ -27,45 +27,10 @@ void show_image(cv::Mat image) {
   cv::waitKey(0);
 }
 
-constexpr int width = 10;
-constexpr int height = 10;
-constexpr int channel = 3;
+constexpr int kWidth = 12;
+constexpr int kHeight = 10;
+constexpr int kChannel = 3;
 
-
-// Generate buffer for a matrix 10x10x3
-std::vector<uint16_t> generateBuffer() {
-  std::vector<uint16_t> matrice;
-  const uint16_t size = width * height * channel;
-  matrice.reserve(size);
-  for (uint16_t i = 0; i < size; ++i) {
-    matrice.push_back(i);
-  }
-  return matrice;
-}
-
-
-// Generate matrix 10x10x3
-// Example of function that return a matrix by value
-cv::Mat generateMatrix() {
-  const std::vector<uint16_t> buffer = generateBuffer();
-  return cv::Mat(buffer, true).reshape(3, {10, 10});
-}
-
-// Example of function that take a matrix as argument
-bool checkMatrixContent(const cv::Mat& mat) {
-  // I don't compare buffer from the matrix with expected buffer to correctly manage slicing.
-  const std::vector<uint16_t> expectedBuffer = generateBuffer();
-  bool match = true;
-  for (int j = 0; j < height; ++j) {
-    for (int i = 0; i < width; ++i) {
-      const cv::Vec3w values = mat.at<cv::Vec3w>(cv::Point(i,j));
-      match &= values(0) == expectedBuffer[j * width * 3 + i * 3 + 0];
-      match &= values(1) == expectedBuffer[j * width * 3 + i * 3 + 1];
-      match &= values(2) == expectedBuffer[j * width * 3 + i * 3 + 2];
-    }
-  }
-  return match;
-}
 
 // Return the depth of the matrice element
 // cf. https://docs.opencv.org/master/d3/d63/classcv_1_1Mat.html#a8da9f853b6f3a29d738572fd1ffc44c0
@@ -93,8 +58,67 @@ std::string checkDepth(const cv::Mat& mat) {
 
 std::tuple<int, int, int> getShape(const cv::Mat& mat) {
   cv::Size s = mat.size();
-  return {s.width, s.height, mat.channels()};
+  return {s.height, s.width, mat.channels()};
 }
+
+
+// Generate buffer for a matrix 10x10x3
+std::vector<uint16_t> generateBuffer() {
+  std::vector<uint16_t> matrice;
+  const uint16_t size = kWidth * kHeight * kChannel;
+  matrice.reserve(size);
+  for (uint16_t i = 0; i < size; ++i) {
+    matrice.push_back(i);
+  }
+  return matrice;
+}
+
+
+// Generate matrix 10x10x3
+// Example of function that return a matrix by value
+cv::Mat generateMatrix() {
+  const std::vector<uint16_t> buffer = generateBuffer();
+  return cv::Mat(buffer, true).reshape(kChannel, {kHeight, kWidth});
+}
+
+// Example of function that take a matrix as argument
+bool checkMatrixContent(const cv::Mat& mat) {
+  // I don't compare buffer from the matrix with expected buffer to correctly manage non contiguous matrices.
+  const std::vector<uint16_t> expectedBuffer = generateBuffer();
+
+  auto [height, width, channel] = getShape(mat);
+  assert(height * width * channel == expectedBuffer.size());
+
+  bool match = true;
+  for (uint16_t i = 0; i < height; ++i) {
+    for (uint16_t j = 0; j < width; ++j) {
+      for (uint16_t c = 0; c < channel; ++c) {
+        const cv::Vec3w values = mat.at<cv::Vec3w>(cv::Point(j,i));
+         match &= values(c) == expectedBuffer[i * width * channel + j * channel + c];
+      }
+    }
+  }
+
+  return match;
+}
+
+// Convert the matrice in a vector to compare
+std::vector<uint16_t> getContentAsVector(const cv::Mat &mat) {
+  auto [height, width, channel] = getShape(mat);
+  int size = height*width*channel;
+  std::vector<uint16_t> buffer;
+  buffer.reserve(size);
+  for (uint16_t i = 0; i < height; ++i) {
+    for (uint16_t j = 0; j < width; ++j) {
+      for (uint16_t c = 0; c < channel; ++c) {
+        const cv::Vec3w values = mat.at<cv::Vec3w>(cv::Point(i,j));
+        buffer.push_back(values(channel));
+      }
+    }
+  }
+  return buffer;
+}
+
 
 cv::Mat passthru(cv::Mat image) {
   return image;
