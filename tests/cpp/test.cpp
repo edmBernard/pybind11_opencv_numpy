@@ -167,6 +167,18 @@ private:
   cv::Mat m_image;
 };
 
+void returnByArgumentValue(cv::Mat mat) {
+  mat.at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
+}
+
+void returnByArgumentRef(cv::Mat & mat) {
+  mat.at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
+}
+
+void returnByArgumentPointer(cv::Mat *mat) {
+  mat->at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
+}
+
 PYBIND11_MODULE(test_module, m) {
 
   NDArrayConverter::init_numpy();
@@ -209,4 +221,11 @@ PYBIND11_MODULE(test_module, m) {
     .def("returnInArgumentByRef", &ClassForReturn::returnInArgumentByRef)
     .def("returnInArgumentByPointer", &ClassForReturn::returnInArgumentByPointer)
     ;
+
+  m.def("returnByArgumentValue", &returnByArgumentValue, py::return_value_policy::copy);
+
+  m.def("returnByArgumentRef", &returnByArgumentRef);
+
+  m.def("returnByArgumentPointer", &returnByArgumentPointer);
+
 }

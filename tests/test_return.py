@@ -1,6 +1,6 @@
 import numpy as np
 from tests import test_module as tm
-
+from tests.utils import generate_matrix, check_matrix_content
 
 def test_return_by_value():
   a = tm.ClassForReturn()
@@ -34,11 +34,24 @@ def test_return_by_pointer():
   assert(np.all(mat == a.returnByValue()))
 
 
-def test_return_by_argument_by_ref():
-  pass
 
 def test_return_by_argument_by_value():
-  pass
+  mat = generate_matrix()
+  tm.returnByArgumentValue(mat)
+
+  # Not intuitive Argument passed by value can be changed by cpp
+  # because the cast between from numpy.drarray to cv::Mat avoid copy by passing buffer
+  assert(not check_matrix_content(mat))
+
+
+def test_return_by_argument_by_ref():
+  mat = generate_matrix()
+  tm.returnByArgumentRef(mat)
+  assert(np.any(mat != generate_matrix()))
+  assert(not check_matrix_content(mat))
+
 
 def test_return_by_argument_by_pointer():
-  pass
+  mat = generate_matrix()
+  tm.returnByArgumentPointer(mat)
+  assert(not check_matrix_content(mat))
