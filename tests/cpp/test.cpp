@@ -179,6 +179,14 @@ void returnByArgumentPointer(cv::Mat *mat) {
   mat->at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
 }
 
+void returnByArgumentValueWithAllocation(cv::Mat mat) {
+  mat = cv::Mat::ones(cv::Size(3, 3), CV_8UC1);
+}
+
+void returnByArgumentRefWithAllocation(cv::Mat & mat) {
+  mat = cv::Mat::ones(cv::Size(3, 3), CV_8UC1);
+}
+
 PYBIND11_MODULE(test_module, m) {
 
   NDArrayConverter::init_numpy();
@@ -227,5 +235,9 @@ PYBIND11_MODULE(test_module, m) {
   m.def("returnByArgumentRef", &returnByArgumentRef);
 
   m.def("returnByArgumentPointer", &returnByArgumentPointer);
+
+  m.def("returnByArgumentValueWithAllocation", &returnByArgumentValueWithAllocation);
+
+  m.def("returnByArgumentRefWithAllocation", &returnByArgumentRefWithAllocation);
 
 }

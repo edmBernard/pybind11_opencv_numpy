@@ -53,7 +53,6 @@ def test_return_by_argument_by_value():
 def test_return_by_argument_by_ref():
   mat = generate_matrix()
   tm.returnByArgumentRef(mat)
-  assert(np.any(mat != generate_matrix()))
   assert(not check_matrix_content(mat))
 
 
@@ -61,3 +60,17 @@ def test_return_by_argument_by_pointer():
   mat = generate_matrix()
   tm.returnByArgumentPointer(mat)
   assert(not check_matrix_content(mat))
+
+
+def test_return_by_argument_by_value():
+  mat = generate_matrix()
+  # During allocation we create a new buffer the data are not linked anymore
+  tm.returnByArgumentValueWithAllocation(mat)
+  assert(check_matrix_content(mat))
+
+
+def test_return_by_argument_by_ref():
+  mat = generate_matrix()
+  # During allocation we create a new buffer the data are not linked anymore
+  tm.returnByArgumentRefWithAllocation(mat)
+  assert(check_matrix_content(mat))
