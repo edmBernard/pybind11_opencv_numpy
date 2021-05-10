@@ -145,7 +145,7 @@ cv::Mat cloneimg(cv::Mat image) {
 class ClassForReturn {
 public:
   ClassForReturn() {
-    m_image = cv::Mat(2, 2, CV_8UC3, cv::Scalar(1,2,3));
+    m_image = generateMatrix();
   }
 
   cv::Mat& returnByRef() { return m_image; };
@@ -160,7 +160,7 @@ public:
   void returnInArgumentByPointer(cv::Mat* image) {};
 
   void changeInternal() {
-    m_image.at<cv::Vec3b>(0, 0) = cv::Vec3b(4,5,6);
+    m_image.at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
   }
 
 private:
