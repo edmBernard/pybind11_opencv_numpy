@@ -145,7 +145,7 @@ cv::Mat cloneimg(cv::Mat image) {
 class ClassForReturn {
 public:
   ClassForReturn() {
-    m_image = cv::Mat(2, 2, CV_8UC3, cv::Scalar(1,2,3));
+    m_image = generateMatrix();
   }
 
   cv::Mat& returnByRef() { return m_image; };
@@ -160,12 +160,24 @@ public:
   void returnInArgumentByPointer(cv::Mat* image) {};
 
   void changeInternal() {
-    m_image.at<cv::Vec3b>(0, 0) = cv::Vec3b(4,5,6);
+    m_image.at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
   }
 
 private:
   cv::Mat m_image;
 };
+
+void returnByArgumentValue(cv::Mat mat) {
+  mat.at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
+}
+
+void returnByArgumentRef(cv::Mat & mat) {
+  mat.at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
+}
+
+void returnByArgumentPointer(cv::Mat *mat) {
+  mat->at<cv::Vec3w>(0, 0) = cv::Vec3w(4,5,6);
+}
 
 PYBIND11_MODULE(test_module, m) {
 
@@ -209,4 +221,11 @@ PYBIND11_MODULE(test_module, m) {
     .def("returnInArgumentByRef", &ClassForReturn::returnInArgumentByRef)
     .def("returnInArgumentByPointer", &ClassForReturn::returnInArgumentByPointer)
     ;
+
+  m.def("returnByArgumentValue", &returnByArgumentValue, py::return_value_policy::copy);
+
+  m.def("returnByArgumentRef", &returnByArgumentRef);
+
+  m.def("returnByArgumentPointer", &returnByArgumentPointer);
+
 }
