@@ -67,6 +67,11 @@ Even if numpy is installed, CMake was not able to find correctly numpy header du
 cmake .. -DCMAKE_TOOLCHAIN_FILE=${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake -DNUMPY_INCLUDE_DIR="${PYTHON_USER_DIR}/LocalCache/local-packages/Python39/site-packages/numpy/core/include/"
 ```
 
+Numpy header location can be found with the following command :
+
+```bash
+python -c "import numpy as np; print(np.get_include())"
+```
 
 ## Build with `setup.py` and cmake
 

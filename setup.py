@@ -9,6 +9,7 @@ import subprocess
 
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
+import numpy as np
 
 # Convert distutils Windows platform specifiers to CMake -A arguments
 PLAT_TO_CMAKE = {
@@ -50,7 +51,8 @@ class CMakeBuild(build_ext):
             "-DPYTHON_EXECUTABLE={}".format(sys.executable),
             "-DEXAMPLE_VERSION_INFO={}".format(self.distribution.get_version()),
             "-DCMAKE_BUILD_TYPE={}".format(cfg),  # not used on MSVC, but no harm
-            "-DCMAKE_TOOLCHAIN_FILE={}/scripts/buildsystems/vcpkg.cmake".format(os.environ.get("VCPKG_DIR"))
+            "-DCMAKE_TOOLCHAIN_FILE={}/scripts/buildsystems/vcpkg.cmake".format(os.environ.get("VCPKG_DIR")),
+            "-DNUMPY_INCLUDE_DIR={}".format(np.get_include())
         ]
         build_args = []
 
