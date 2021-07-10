@@ -128,7 +128,13 @@ public:
             _sizes[i] = sizes[i];
         if( cn > 1 )
             _sizes[dims++] = cn;
+#if CV_MAJOR_VERSION >= 4 || (CV_MAJOR_VERSION == 3 && CV_VERSION_MINOR >= 5) || (CV_MAJOR_VERSION == 3 && CV_VERSION_MINOR == 4 && CV_VERSION_REVISION >= 3)
+        // Use cv::AutoBuffer::data() in OpenCV 3.4.3 and above
         PyObject* o = PyArray_SimpleNew(dims, _sizes.data(), typenum);
+#else
+        // Use older cv::AutoBuffer::operator _Tp*()
+        PyObject* o = PyArray_SimpleNew(dims, &(_sizes[0]), typenum);
+#endif
         if(!o)
             CV_Error_(Error::StsError, ("The numpy array of typenum=%d, ndims=%d can not be created", typenum, dims));
         return allocate(o, dims0, sizes, type, step);
