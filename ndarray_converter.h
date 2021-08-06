@@ -3,6 +3,7 @@
 
 #include <Python.h>
 #include <opencv2/core/core.hpp>
+#include <pybind11/pybind11.h>
 
 
 class NDArrayConverter {
@@ -14,29 +15,22 @@ public:
     static PyObject* toNDArray(const cv::Mat& mat);
 };
 
-//
-// Define the type converter
-//
+namespace pybind11::detail {
 
-#include <pybind11/pybind11.h>
+    template <> struct type_caster<cv::Mat>: public type_caster_base<cv::Mat> {
+        using base = type_caster_base<cv::Mat>;
+        public:
 
-namespace pybind11 { namespace detail {
+            bool load(handle src, bool /* convert */) {
+                return NDArrayConverter::toMat(src.ptr(), *this);
+            }
 
-template <> struct type_caster<cv::Mat> {
-public:
-
-    PYBIND11_TYPE_CASTER(cv::Mat, _("numpy.ndarray"));
-
-    bool load(handle src, bool /* convert */) {
-        return NDArrayConverter::toMat(src.ptr(), value);
-    }
-
-    static handle cast(const cv::Mat &m, return_value_policy, handle defval) {
-        return handle(NDArrayConverter::toNDArray(m));
-    }
-};
+            static handle cast(const cv::Mat &m, return_value_policy, handle defval) {
+                return handle(NDArrayConverter::toNDArray(m));
+            }
+        };
 
 
-}} // namespace pybind11::detail
+    } // namespace pybind11::detail
 
 # endif
