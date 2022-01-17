@@ -1,6 +1,6 @@
 # pybind11_opencv_numpy
 
-Binding between cv::Mat and np.array. And a small code example of how it work. The code work for `OpenCV 2.4`, `OpenCV 3+` and `OpenCV 4+`
+Binding between cv::Mat and np.array. And a small code example of how it work. The code work for `OpenCV 3+` and `OpenCV 4+`
 
 The code in this repository create a simple binding, function in c++ are implemented in [`tests/cpp/test.cpp`](tests/cpp/test.cpp) file and python script that use them are in the tests folder like [`tests/test_binding.py`](tests/test_binding.py).
 
@@ -16,11 +16,11 @@ The code in this repository create a simple binding, function in c++ are impleme
 There is 3 way to build the project, more information can be found on pybind11 website [here](https://pybind11.readthedocs.io/en/stable/compiling.html#build-systems) :
   1. build with cmake : the basic, compiled library will be generated in build folder
   2. build with setup.py and cmake : install your module in python and dependency are managed by cmake/vcpkg (opencv and pybind11)
-  3. build with setup.py and setuptools : install your module in python and dependency are managed by python package (opencv and pybind11) ***Soon***
+  3. ***Not Supported Yet*** build with setup.py and setuptools : install your module in python and dependency are managed by python package (opencv and pybind11)
 
 ## Build with cmake
 
-*Note* : This method support opencv 2.4, opencv 3 and opencv 4.
+*Note* : This method support opencv 3 and opencv 4.
 
 ### Step 1 : Install dependencies
 
@@ -75,21 +75,17 @@ python -c "import numpy as np; print(np.get_include())"
 
 ## Build with `setup.py` and cmake
 
-*Note* : This method support opencv 2.4, opencv 3 and opencv 4.
+*Note* : This method support opencv 3 and opencv 4.
 
 You should first follow step 1 and 2 from the ***Build with cmake*** paragraph
 
 ### Step 3 : Compile
 
-#### OpenCV 2.4+, OpenCV 3+, , OpenCV 4+
+#### OpenCV 3+ , OpenCV 4+
 
 ```bash
 python3 -m pip install .
 ```
-
-## Build with `setup.py` and setuptool
-
- ***in coming***
 
 
 ## Execute Tests
